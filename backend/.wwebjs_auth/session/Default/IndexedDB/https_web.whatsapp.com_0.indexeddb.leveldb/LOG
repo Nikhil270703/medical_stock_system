@@ -1,0 +1,5 @@
+2026/07/19-12:35:35.763 1f98 Creating DB E:\student_information_system\medical_stock_system\backend\.wwebjs_auth\session\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb since it was missing.
+2026/07/19-12:35:35.772 1f98 Reusing MANIFEST E:\student_information_system\medical_stock_system\backend\.wwebjs_auth\session\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
+2026/07/19-13:51:42.892 325c Level-0 table #5: started
+2026/07/19-13:51:42.947 325c Level-0 table #5: 1093456 bytes OK
+2026/07/19-13:51:42.951 325c Delete type=0 #3

@@ -1,0 +1,151 @@
+import React, { useState } from 'react';
+import api from '../services/api';
+import './Login.css';
+
+export default function Login({ onLoginSuccess }) {
+  const [loginType, setLoginType] = useState('staff'); // 'staff' | 'customer'
+  const [email, setEmail] = useState('');
+  const [mobile, setMobile] = useState('');
+  const [password, setPassword] = useState('');
+  
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError('');
+    
+    if (loginType === 'staff' && (!email || !password)) {
+      setError('Please fill in email and password.');
+      return;
+    }
+    if (loginType === 'customer' && (!mobile || !password)) {
+      setError('Please fill in mobile and password.');
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const endpoint = loginType === 'customer' ? '/auth/customer/login' : '/auth/login';
+      const payload = loginType === 'customer' ? { mobile, password } : { email, password };
+      
+      const response = await api.post(endpoint, payload);
+      const { token, user } = response.data;
+      
+      // Store token and user details
+      localStorage.setItem('sis_jwt_token', token);
+      localStorage.setItem('sis_user_role', user.role);
+      localStorage.setItem('sis_user_name', user.name);
+      
+      setTimeout(() => {
+        onLoginSuccess(user);
+      }, 500);
+    } catch (err) {
+      console.error(err);
+      setError(err.response?.data?.error || 'Invalid credentials or connection error');
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="modern-login-container">
+      <div className="modern-login-card" style={{ maxWidth: '400px', width: '100%' }}>
+        <div className="login-header-modern">
+          <div className="logo-wrapper" style={{ background: '#3b82f6', color: '#fff' }}>
+            {/* Shop SVG */}
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} style={{ width: '28px', height: '28px' }}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+            </svg>
+          </div>
+          <h1 style={{ color: '#1e3a8a', marginTop: '15px', fontSize: '24px' }}>Shop Manager</h1>
+          <p style={{ color: '#64748b' }}>Sign in to manage stock and orders</p>
+        </div>
+
+        {error && (
+          <div className="modern-toast" style={{ background: '#fef2f2', border: '1px solid #fca5a5', color: '#b91c1c', display: 'flex', gap: '8px', padding: '10px', borderRadius: '8px', marginBottom: '15px', fontSize: '13px' }}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span>{error}</span>
+          </div>
+        )}
+
+        <div style={{ display: 'flex', marginBottom: '20px', borderBottom: '1px solid #cbd5e1' }}>
+          <div 
+            onClick={() => setLoginType('staff')}
+            style={{ flex: 1, textAlign: 'center', padding: '10px', cursor: 'pointer', fontWeight: 'bold', borderBottom: loginType === 'staff' ? '3px solid #3b82f6' : '3px solid transparent', color: loginType === 'staff' ? '#3b82f6' : '#64748b' }}
+          >
+            Admin / Staff
+          </div>
+          <div 
+            onClick={() => setLoginType('customer')}
+            style={{ flex: 1, textAlign: 'center', padding: '10px', cursor: 'pointer', fontWeight: 'bold', borderBottom: loginType === 'customer' ? '3px solid #3b82f6' : '3px solid transparent', color: loginType === 'customer' ? '#3b82f6' : '#64748b' }}
+          >
+            Customer Portal
+          </div>
+        </div>
+
+        <form onSubmit={handleSubmit}>
+          {loginType === 'staff' ? (
+            <div className="modern-form-group" style={{ marginBottom: '16px' }}>
+              <label style={{ fontSize: '13px', fontWeight: '600', color: '#475569', marginBottom: '6px', display: 'block' }}>Email Address</label>
+              <div className="modern-input-wrapper" style={{ position: 'relative' }}>
+                <input 
+                  type="email"
+                  placeholder="email@example.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  style={{ width: '100%', padding: '10px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', outline: 'none' }}
+                  required
+                />
+              </div>
+            </div>
+          ) : (
+            <div className="modern-form-group" style={{ marginBottom: '16px' }}>
+              <label style={{ fontSize: '13px', fontWeight: '600', color: '#475569', marginBottom: '6px', display: 'block' }}>Mobile Number</label>
+              <div className="modern-input-wrapper" style={{ position: 'relative' }}>
+                <input 
+                  type="text"
+                  placeholder="Enter your registered mobile"
+                  value={mobile}
+                  onChange={(e) => setMobile(e.target.value)}
+                  style={{ width: '100%', padding: '10px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', outline: 'none' }}
+                  required
+                />
+              </div>
+            </div>
+          )}
+
+          <div className="modern-form-group" style={{ marginBottom: '20px' }}>
+            <label style={{ fontSize: '13px', fontWeight: '600', color: '#475569', marginBottom: '6px', display: 'block' }}>Password</label>
+            <div className="modern-input-wrapper">
+              <input 
+                type="password"
+                placeholder="Enter password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                style={{ width: '100%', padding: '10px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', outline: 'none' }}
+                required
+              />
+            </div>
+          </div>
+
+          <button 
+            type="submit" 
+            className="login-btn-modern" 
+            disabled={loading}
+            style={{ width: '100%', padding: '12px', background: '#3b82f6', color: '#fff', border: 'none', borderRadius: '8px', fontWeight: '600', cursor: 'pointer', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+          >
+            {loading ? 'Authenticating...' : 'Sign In'}
+          </button>
+        </form>
+
+        <div className="demo-credentials" style={{ marginTop: '20px', padding: '12px', background: '#f8fafc', borderRadius: '8px', border: '1px dashed #cbd5e1', fontSize: '12px', color: '#64748b' }}>
+          <strong>Demo Logins:</strong>
+          <div style={{ marginTop: '5px' }}>Admin: admin@school.com / admin123</div>
+          <div>Staff: staff@shop.com / staff123</div>
+        </div>
+      </div>
+    </div>
+  );
+}
