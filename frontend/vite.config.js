@@ -18,9 +18,11 @@ export default defineConfig({
     cors: true,
     proxy: {
       '/api': {
-        target: 'http://127.0.0.1:4009',
+        target:
+          process.env.VITE_API_URL ||
+          'https://medical-stock-system-backend.onrender.com',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, '/result-analysis'),
+
       },
     },
   },
