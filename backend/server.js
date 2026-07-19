@@ -3,7 +3,7 @@ const app = require('./src/app');
 const { connectDb } = require('./src/config/db');
 const env = require('./src/config/env');
 const { initCron } = require('./src/services/cronService');
-require('./src/services/whatsappClient'); // Initialize local WhatsApp client
+//require('./src/services/whatsappClient'); // Initialize local WhatsApp client
 
 const autoSeed = async () => {
   try {
@@ -11,7 +11,7 @@ const autoSeed = async () => {
     const count = await User.countDocuments();
     if (count === 0) {
       console.log('[seed] Database is empty. Auto-seeding initial shop admin and staff users...');
-      
+
       // Admin
       const admin = new User({
         email: 'admin@school.com',
@@ -58,7 +58,7 @@ const autoSeed = async () => {
     await connectDb();
     await autoSeed();
     initCron();
-    
+
     app.listen(env.PORT, env.HOST, () => {
       console.log('[shop-management] backend listening on http://' + env.HOST + ':' + env.PORT);
     });
