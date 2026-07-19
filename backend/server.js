@@ -59,8 +59,10 @@ const autoSeed = async () => {
     await autoSeed();
     initCron();
 
-    app.listen(env.PORT, env.HOST, () => {
-      console.log('[shop-management] backend listening on http://' + env.HOST + ':' + env.PORT);
+    const PORT = process.env.PORT || env.PORT || 4009;
+
+    app.listen(PORT, '0.0.0.0', () => {
+      console.log(`[shop-management] backend listening on port ${PORT}`);
     });
   } catch (err) {
     console.error('Server startup failed:', err.message);
