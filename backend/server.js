@@ -39,7 +39,7 @@ const autoSeed = async () => {
       // Default Setting
       const Setting = require('./src/models/setting');
       const setting = new Setting({
-        companyName: 'Apex Medical Shop',
+        companyName: 'Tammewar Pharmacy',
         address: 'Pune, Maharashtra',
         email: 'admin@school.com',
         contact: '9876543210'

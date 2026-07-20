@@ -57,7 +57,7 @@ export default function Login({ onLoginSuccess }) {
               <path strokeLinecap="round" strokeLinejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
             </svg>
           </div>
-          <h1 style={{ color: '#1e3a8a', marginTop: '15px', fontSize: '24px' }}>Shop Manager</h1>
+          <h1 style={{ color: '#1e3a8a', marginTop: '15px', fontSize: '24px' }}>Tammewar Pharmacy</h1>
           <p style={{ color: '#64748b' }}>Sign in to manage stock and orders</p>
         </div>
 

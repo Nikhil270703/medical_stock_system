@@ -331,9 +331,9 @@ export default function Bills() {
 
               <div style={{ padding: '12px', background: '#f8fafc', border: '1px dashed #cbd5e1', borderRadius: '8px', fontSize: '12px', color: '#334155', minHeight: '80px', lineHeight: '1.6' }}>
                 {reminderLanguage === 'english' ? (
-                  <span>Dear {reminderCustomer?.name}, your outstanding payment of Rs. {outstandingDues.toFixed(2)} is pending. Please pay at the earliest. Thank you, Apex Medical Shop.</span>
+                  <span>Dear {reminderCustomer?.name}, your outstanding payment of Rs. {outstandingDues.toFixed(2)} is pending. Please pay at the earliest. Thank you, Tammewar Pharmacy.</span>
                 ) : (
-                  <span>प्रिय {reminderCustomer?.name}, तुमचे थकीत बिल {outstandingDues.toFixed(2)} रुपये प्रलंबित आहे. कृपया लवकरात लवकर भरणा करावा. धन्यवाद, Apex Medical Shop.</span>
+                  <span>प्रिय {reminderCustomer?.name}, तुमचे थकीत बिल {outstandingDues.toFixed(2)} रुपये प्रलंबित आहे. कृपया लवकरात लवकर भरणा करावा. धन्यवाद, Tammewar Pharmacy.</span>
                 )}
               </div>
 

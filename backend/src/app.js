@@ -10,9 +10,8 @@ const app = express();
 app.use(cors({
   origin: [
     "http://localhost:3009",
-    "http://localhost:5173"
-    // Add your Vercel URL here after deployment
-    // "https://your-app.vercel.app"
+    "http://localhost:5173",
+    "https://medical-stock-system.vercel.app"
   ],
   credentials: true
 }));

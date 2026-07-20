@@ -55,7 +55,7 @@ const seedData = async () => {
 
     console.log('Seeding company settings...');
     const setting = new Setting({
-      companyName: 'Apex Medical & Retail Distributors',
+      companyName: 'Tammewar Pharmacy',
       state: 'Maharashtra',
       logoUrl: '',
       address: 'Shop No 14, Commercial Plaza, Shivajinagar, Pune, Maharashtra - 411005',
