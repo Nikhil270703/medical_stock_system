@@ -42,7 +42,11 @@ export default function Login({ onLoginSuccess }) {
       }, 500);
     } catch (err) {
       console.error(err);
-      setError(err.response?.data?.error || 'Invalid credentials or connection error');
+      const errorData = err.response?.data?.error;
+      const errorMessage = typeof errorData === 'object' && errorData !== null
+        ? (errorData.message || JSON.stringify(errorData))
+        : errorData;
+      setError(errorMessage || 'Invalid credentials or connection error');
       setLoading(false);
     }
   };
@@ -139,12 +143,6 @@ export default function Login({ onLoginSuccess }) {
             {loading ? 'Authenticating...' : 'Sign In'}
           </button>
         </form>
-
-        <div className="demo-credentials" style={{ marginTop: '20px', padding: '12px', background: '#f8fafc', borderRadius: '8px', border: '1px dashed #cbd5e1', fontSize: '12px', color: '#64748b' }}>
-          <strong>Demo Logins:</strong>
-          <div style={{ marginTop: '5px' }}>Admin: admin@school.com / admin123</div>
-          <div>Staff: staff@shop.com / staff123</div>
-        </div>
       </div>
     </div>
   );

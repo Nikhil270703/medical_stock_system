@@ -322,16 +322,3 @@ select.modern-input {
   color: #374151;
 }
 
-.test-credentials {
-  margin-top: 24px;
-  padding-top: 24px;
-  border-top: 1px solid #e5e7eb;
-  font-size: 11px;
-  color: #6b7280;
-  text-align: center;
-  line-height: 1.5;
-}
-
-.test-credentials strong {
-  color: #374151;
-}
